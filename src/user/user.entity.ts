@@ -4,32 +4,32 @@ import { UploadEntity } from '../upload/upload.entity';
 @Entity({name: 'user'})
 export class UserEntity {
 
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({comment: 'id'})
   id: number;
 
-  @Column({ length: 20})
+  @Column({ length: 20, comment: '用户名'})
   username: string;
 
-  @Column()
+  @Column({comment: '密码'})
   password: string;
 
-  @Column()
+  @Column({comment: '邮箱'})
   email: string;
 
-  @Column()
+  @Column({comment: '手机号'})
   mobile: string;
 
   @OneToOne(() => UploadEntity)
   @JoinColumn()
   userImg: UploadEntity;
 
-  @Column()
+  @Column({comment: '状态 0：禁用 1：启用'})
   status: boolean;
 
-  @Column()
+  @Column({comment: '创建时间'})
   createdTime: Date;
 
-  @Column()
+  @Column({comment: '更新时间'})
   lastModifiedTime: Date;
 
 }

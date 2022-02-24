@@ -7,5 +7,6 @@ export default {
   database: 'yyx-nest-db',
   entities: [join(__dirname, '../', '**/**.entity{.ts,.js}')],
   synchronize: true,
-  autoLoadEntities: true
+  autoLoadEntities: true,
+  logging: ['query', 'error'] // 开启日志
 }

@@ -11,9 +11,9 @@ export class UploadEntity {
   @Column()
   newFileName: string;
 
-  @Column()
+  @Column({select: false})
   createdTime: Date;
 
-  @Column()
+  @Column({select: false})
   lastModifiedTime: Date;
 }
