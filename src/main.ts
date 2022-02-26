@@ -9,11 +9,12 @@ async function bootstrap() {
     // logger: ['error', 'warn'],
   });
 
-  // 全局过滤器
+  // 全局异常过滤器
   app.useGlobalFilters(new HttpExceptionFilter());
 
   // 全局拦截器
   app.useGlobalInterceptors(new TransformInterceptor());
+
   // 设置swagger文档相关配置
   const swaggerOptions = new DocumentBuilder()
     .setTitle('yyx-nest 接口API')

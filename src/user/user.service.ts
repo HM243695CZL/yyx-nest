@@ -33,13 +33,13 @@ export class UserService {
   }
 
   async create(user) {
-    const error = await validate(new UserDto(user));
-    if (error.length) {
-      throw new HttpException({
-        code: HttpStatus.INTERNAL_SERVER_ERROR,
-        message: `${error[0].property}${RequestParamErrorEnum[Object.keys(error[0].constraints)[0]]}`,
-      }, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+    // const error = await validate(new UserDto(user));
+    // if (error.length) {
+    //   throw new HttpException({
+    //     code: HttpStatus.INTERNAL_SERVER_ERROR,
+    //     message: `${error[0].property}${RequestParamErrorEnum[Object.keys(error[0].constraints)[0]]}`,
+    //   }, HttpStatus.INTERNAL_SERVER_ERROR);
+    // }
     delete user.id;
     user.createdTime = new Date();
     user.lastModifiedTime = new Date();
