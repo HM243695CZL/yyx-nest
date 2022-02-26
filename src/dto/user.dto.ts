@@ -11,6 +11,7 @@ export class UserDto {
     this.status = user.status;
   }
 
+  @ApiProperty()
   id: number;
 
   @ApiProperty()
