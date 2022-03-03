@@ -23,6 +23,14 @@ export class UserService {
     return success(data, ResponseMessageEnum.OPERATE_SUCCESS);
   }
 
+  /**
+   * 根据用户名查找
+   * @param username 用户名
+   */
+  async findByUsername(username: string) {
+    return await this.userRepository.findOne({username})
+  }
+
   async page(page: PageEntity) {
     const condition = createQueryCondition(page);
     const data = await this.userRepository.findAndCount(condition);
@@ -33,13 +41,13 @@ export class UserService {
   }
 
   async create(user) {
-    // const error = await validate(new UserDto(user));
-    // if (error.length) {
-    //   throw new HttpException({
-    //     code: HttpStatus.INTERNAL_SERVER_ERROR,
-    //     message: `${error[0].property}${RequestParamErrorEnum[Object.keys(error[0].constraints)[0]]}`,
-    //   }, HttpStatus.INTERNAL_SERVER_ERROR);
-    // }
+    const error = await validate(new UserDto(user));
+    if (error.length) {
+      throw new HttpException({
+        code: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: `${error[0].property}${RequestParamErrorEnum[Object.keys(error[0].constraints)[0]]}`,
+      }, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
     delete user.id;
     user.createdTime = new Date();
     user.lastModifiedTime = new Date();

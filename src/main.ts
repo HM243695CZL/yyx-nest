@@ -9,6 +9,9 @@ async function bootstrap() {
     // logger: ['error', 'warn'],
   });
 
+  // 处理跨域问题
+  app.enableCors();
+
   // 全局异常过滤器
   app.useGlobalFilters(new HttpExceptionFilter());
 
@@ -24,6 +27,6 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, swaggerOptions);
   SwaggerModule.setup('api', app, document);
-  await app.listen(3000);
+  await app.listen(3001);
 }
 bootstrap();
