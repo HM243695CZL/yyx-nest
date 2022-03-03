@@ -1,7 +1,7 @@
 /**
  * http异常过滤器
  */
-import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus } from '@nestjs/common';
+import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus, NotFoundException } from '@nestjs/common';
 import { CannotCreateEntityIdMapError, EntityNotFoundError, QueryFailedError } from 'typeorm';
 import { GlobalResponseError } from './global.response.error';
 
@@ -19,6 +19,11 @@ export class HttpExceptionFilter implements ExceptionFilter<HttpException>{
         status = (exception as HttpException).getStatus();
         message = (exception as HttpException).message;
         code = (exception as HttpException).getStatus();
+        break;
+      case NotFoundException:
+        status = (exception as NotFoundException).getStatus();
+        message = (exception as NotFoundException).message;
+        code = (exception as NotFoundException).getStatus();
         break;
       case QueryFailedError:
         status = HttpStatus.UNPROCESSABLE_ENTITY;
