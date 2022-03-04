@@ -1,5 +1,5 @@
 import { Body, Controller, Post, UploadedFile, UploadedFiles, UseInterceptors } from '@nestjs/common';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBody } from '@nestjs/swagger';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { join } from 'path';
 import { createWriteStream } from 'fs';
@@ -16,6 +16,18 @@ export class CommonController {
 
   @Post('upload/one')
   @ApiOperation({summary: '上传单个文件'})
+  @ApiBody({
+    required: true,
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary'
+        }
+      }
+    }
+  })
   @UseInterceptors(FileInterceptor('file')) // file 表示上传文件的字段名
   async uploadOne(@UploadedFile() file, @Body() body) {
     // body 为FormData中的其他非文件参数
@@ -33,6 +45,18 @@ export class CommonController {
 
   @Post('upload/more')
   @ApiOperation({summary: '上传文件数组'})
+  @ApiBody({
+    required: true,
+    schema: {
+      type: 'object',
+      properties: {
+        files: {
+          type: 'string',
+          format: 'binary'
+        }
+      }
+    }
+  })
   @UseInterceptors(FilesInterceptor('files'))
   async uploadMore(@UploadedFiles() files, @Body() body) {
     let arr = [];
