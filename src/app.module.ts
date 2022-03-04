@@ -8,6 +8,7 @@ import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { LoginModule } from './modules/login/login.module';
 import { CommonModule } from './modules/common/common.module';
+import { MenuModule } from './modules/menu/menu.module';
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { CommonModule } from './modules/common/common.module';
     }),
     AuthModule,
     LoginModule,
-    CommonModule
+    CommonModule,
+    MenuModule
   ],
   controllers: [AppController],
   providers: [AppService],
