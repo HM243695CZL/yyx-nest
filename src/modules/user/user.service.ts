@@ -2,13 +2,13 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository, Like } from 'typeorm';
 import { validate } from 'class-validator';
-import { UserEntity } from '../entity/user.entity';
-import { UserDto } from '../dto/user.dto';
-import { RequestParamErrorEnum } from '../enum/request-param-error.enum';
-import { ResponseMessageEnum } from '../enum/response.message.enum';
-import { success, fail } from '../common/res-status';
-import { PageEntity } from '../entity/page.entity';
-import { createQueryCondition } from '../common/page-query';
+import { UserEntity } from '../../entity/user.entity';
+import { UserDto } from '../../dto/user.dto';
+import { RequestParamErrorEnum } from '../../enum/request-param-error.enum';
+import { ResponseMessageEnum } from '../../enum/response.message.enum';
+import { success, fail } from '../../common/res-status';
+import { PageEntity } from '../../entity/page.entity';
+import { createQueryCondition } from '../../common/page-query';
 
 @Injectable()
 export class UserService {

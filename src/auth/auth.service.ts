@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UserService } from '../user/user.service';
+import { UserService } from '../modules/user/user.service';
 import { success } from '../common/res-status';
 import { ResponseMessageEnum } from '../enum/response.message.enum';
 

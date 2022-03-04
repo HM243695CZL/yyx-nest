@@ -1,8 +1,8 @@
 import { Controller, Post, UseGuards, Request, Body, Req, Get } from '@nestjs/common';
 import { ApiTags, ApiOperation} from '@nestjs/swagger';
-import { LocalAuthGuard } from '../auth/guards/local-auth.guard';
-import { AuthService } from '../auth/auth.service';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { LocalAuthGuard } from '../../auth/guards/local-auth.guard';
+import { AuthService } from '../../auth/auth.service';
+import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 
 @ApiTags('登录管理')
 @Controller('login')
