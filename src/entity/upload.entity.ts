@@ -1,15 +1,20 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 @Entity({ name: 'upload'})
 export class UploadEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryColumn({
+    length: 50
+  })
+  id: string;
 
   @Column()
   originFileName: string;
 
   @Column()
   newFileName: string;
+
+  @Column()
+  size: string;
 
   @Column({select: false})
   createdTime: Date;

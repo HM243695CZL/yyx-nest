@@ -7,6 +7,7 @@ import { AppService } from './app.service';
 import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { LoginModule } from './modules/login/login.module';
+import { CommonModule } from './modules/common/common.module';
 
 @Module({
   imports: [
@@ -17,7 +18,8 @@ import { LoginModule } from './modules/login/login.module';
       inject: [ConfigService]
     }),
     AuthModule,
-    LoginModule
+    LoginModule,
+    CommonModule
   ],
   controllers: [AppController],
   providers: [AppService],
