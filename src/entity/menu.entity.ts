@@ -33,9 +33,9 @@ export class MenuEntity {
   @Column({comment: '是否隐藏： 1 是 0 否'})
   hidden: number;
 
-  @CreateDateColumn({comment: '创建时间'})
+  @CreateDateColumn({comment: '创建时间', select: false})
   createdTime: Date;
 
-  @UpdateDateColumn({comment: '更新时间'})
+  @UpdateDateColumn({comment: '更新时间', select: false})
   lastModifiedTime: Date;
 }

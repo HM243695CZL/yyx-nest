@@ -2,7 +2,7 @@
  * http异常过滤器
  */
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus, NotFoundException,
-  UnauthorizedException
+  UnauthorizedException, BadRequestException
 } from '@nestjs/common';
 import { CannotCreateEntityIdMapError, EntityNotFoundError, QueryFailedError } from 'typeorm';
 import { Logger } from '../utils/log4js';
@@ -73,7 +73,16 @@ export class HttpExceptionFilter implements ExceptionFilter<HttpException>{
         logFormat += resStr;
         Logger.info(logFormat);
         break;
+      case BadRequestException:
+        message = (exception as BadRequestException).message;
+        code = (exception as BadRequestException).getStatus();
+        resStr = `Status code: ${status}
+          Response: ${exception.toString()} \n >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>`;
+        logFormat += resStr;
+        Logger.info(logFormat);
+        break;
       default:
+        message = exception.toString();
         break;
     }
     response.status(status).json(GlobalResponseError(status, message, code))

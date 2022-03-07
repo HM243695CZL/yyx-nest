@@ -34,10 +34,10 @@ export class UserEntity {
   @Column({comment: '状态 0：禁用 1：启用'})
   status: boolean;
 
-  @CreateDateColumn({comment: '创建时间'})
+  @CreateDateColumn({comment: '创建时间', select: false})
   createdTime: Date;
 
-  @UpdateDateColumn({comment: '更新时间'})
+  @UpdateDateColumn({comment: '更新时间', select: false})
   lastModifiedTime: Date;
 
 }

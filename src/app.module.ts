@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { LoginModule } from './modules/login/login.module';
 import { CommonModule } from './modules/common/common.module';
 import { MenuModule } from './modules/menu/menu.module';
+import { FormGeneratorModule } from './modules/form-generator/form-generator.module';
 
 @Module({
   imports: [
@@ -21,7 +22,8 @@ import { MenuModule } from './modules/menu/menu.module';
     AuthModule,
     LoginModule,
     CommonModule,
-    MenuModule
+    MenuModule,
+    FormGeneratorModule
   ],
   controllers: [AppController],
   providers: [AppService],
