@@ -29,15 +29,15 @@ export class FormGeneratorController {
     return await this.formGeneratorService.update(formGenerator);
   }
 
-  @Post('view')
+  @Get('view')
   @ApiOperation({summary: '查看表单配置'})
-  async view(@Body() formKey: FormKeyDto): Promise<any> {
+  async view(@Param() formKey: FormKeyDto): Promise<any> {
     return await this.formGeneratorService.view(formKey);
   }
 
-  @Get('delete/:id')
+  @Get('delete')
   @ApiOperation({summary: '删除表单配置'})
-  async delete(@Param() id: CommonDto): Promise<any> {
+  async delete(@Query() id: CommonDto): Promise<any> {
     return await this.formGeneratorService.delete(id);
   }
 }

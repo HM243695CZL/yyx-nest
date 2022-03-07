@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Param } from '@nestjs/common';
+import { Body, Controller, Get, Post, Param, Query } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { UserDto } from '../../dto/user.dto';
@@ -40,9 +40,9 @@ export class UserController {
     return await this.userService.view(id);
   }
 
-  @Get('delete/:id')
+  @Get('delete')
   @ApiOperation({ summary: '删除用户'})
-  async delete(@Param() id: CommonDto): Promise<any> {
+  async delete(@Query() id: CommonDto): Promise<any> {
     return await this.userService.delete(id);
   }
 }

@@ -24,9 +24,9 @@ export class FormGeneratorEntity {
   @Column({comment: '配置缩略图', type: 'text', nullable: true})
   screenShot: string;
 
-  @CreateDateColumn({comment: '创建时间', select: false})
+  @CreateDateColumn({comment: '创建时间'})
   createdTime: Date;
 
-  @UpdateDateColumn({comment: '更新时间', select: false})
+  @UpdateDateColumn({comment: '更新时间'})
   lastModifiedTime: Date;
 }
