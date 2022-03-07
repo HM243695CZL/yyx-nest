@@ -10,7 +10,9 @@ export const createQueryCondition = params => {
   return {
     skip: rows * (first - 1),
     take: rows,
-    ...where
+    where: {
+      ...where
+    }
   }
 };
 
