@@ -31,7 +31,7 @@ export class FormGeneratorController {
 
   @Get('view')
   @ApiOperation({summary: '查看表单配置'})
-  async view(@Param() formKey: FormKeyDto): Promise<any> {
+  async view(@Query() formKey: FormKeyDto): Promise<any> {
     return await this.formGeneratorService.view(formKey);
   }
 
