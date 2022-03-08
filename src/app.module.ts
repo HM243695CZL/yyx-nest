@@ -10,6 +10,7 @@ import { LoginModule } from './modules/login/login.module';
 import { CommonModule } from './modules/common/common.module';
 import { MenuModule } from './modules/menu/menu.module';
 import { FormGeneratorModule } from './modules/form-generator/form-generator.module';
+import { IconModule } from './modules/icon/icon.module';
 
 @Module({
   imports: [
@@ -23,7 +24,8 @@ import { FormGeneratorModule } from './modules/form-generator/form-generator.mod
     LoginModule,
     CommonModule,
     MenuModule,
-    FormGeneratorModule
+    FormGeneratorModule,
+    IconModule
   ],
   controllers: [AppController],
   providers: [AppService],
