@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { JwtModule } from '@nestjs/jwt';
 import { IconController } from './icon.controller';
 import { IconService } from './icon.service';
 import { IconEntity } from '../../entity/icon.entity';
