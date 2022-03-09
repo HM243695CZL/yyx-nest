@@ -12,6 +12,7 @@ import { MenuModule } from './modules/menu/menu.module';
 import { FormGeneratorModule } from './modules/form-generator/form-generator.module';
 import { IconModule } from './modules/icon/icon.module';
 import { CategoryModule } from './modules/category/category.module';
+import { GoodsTypeModule } from './modules/goods-type/goods-type.module';
 
 @Module({
   imports: [
@@ -27,7 +28,8 @@ import { CategoryModule } from './modules/category/category.module';
     MenuModule,
     FormGeneratorModule,
     IconModule,
-    CategoryModule
+    CategoryModule,
+    GoodsTypeModule
   ],
   controllers: [AppController],
   providers: [AppService],
