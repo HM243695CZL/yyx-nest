@@ -57,4 +57,22 @@ export class IconService {
       }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+
+  async delete(id) {
+    if (!id) {
+      throw new HttpException({
+        code: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: ResponseMessageEnum.ID_IS_NULL,
+      }, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    const data = await this.iconRepository.delete(id);
+    if (data.affected) {
+      return success(id, ResponseMessageEnum.DELETE_SUCCESS);
+    } else {
+      throw new HttpException({
+        code: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: ResponseMessageEnum.DELETE_FAIL
+      }, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
 }

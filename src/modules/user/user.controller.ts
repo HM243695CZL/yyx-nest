@@ -1,9 +1,10 @@
-import { Body, Controller, Get, Post, Param, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, Param, Query, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { UserDto } from '../../dto/user.dto';
 import { CommonDto } from '../../dto/common.dto';
 import { PageEntity } from '../../entity/page.entity';
+import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 
 @ApiTags('用户管理')
 @Controller('user')
@@ -22,12 +23,14 @@ export class UserController {
     return await this.userService.page(page);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post('create')
   @ApiOperation({summary: '新增用户'})
   async create(@Body() user: UserDto): Promise<any>{
     return await this.userService.create(user);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post('update')
   @ApiOperation({ summary: '更新用户'})
   async update(@Body() user: UserDto): Promise<any> {
@@ -40,6 +43,7 @@ export class UserController {
     return await this.userService.view(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('delete')
   @ApiOperation({ summary: '删除用户'})
   async delete(@Query() id: CommonDto): Promise<any> {
