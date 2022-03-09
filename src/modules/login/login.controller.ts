@@ -15,7 +15,7 @@ export class LoginController {
   @ApiOperation({summary: '登录'})
   @Post('')
   async login(@Request() req) {
-    return this.authService.login(req);
+    return this.authService.login(req.user);
   }
 
   @UseGuards(JwtAuthGuard)
