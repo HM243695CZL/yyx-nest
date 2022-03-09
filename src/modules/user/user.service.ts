@@ -103,7 +103,7 @@ export class UserService {
       return success(data, ResponseMessageEnum.OPERATE_SUCCESS);
     } else {
       return fail('', ResponseMessageEnum.ID_IS_ERROR)
-  }
+    }
   }
 
   async delete(id) {
