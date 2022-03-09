@@ -18,7 +18,7 @@ export class UserEntity {
   @Column({ length: 20, comment: '用户名', unique: true})
   username: string;
 
-  @Column({comment: '密码'})
+  @Column({comment: '密码', select: false})
   password: string;
 
   @Column({comment: '邮箱', nullable: true})
@@ -31,8 +31,8 @@ export class UserEntity {
   @JoinColumn()
   userImg: UploadEntity;
 
-  @Column({comment: '状态 0：禁用 1：启用'})
-  status: boolean;
+  @Column({comment: '状态 0：禁用 1：启用', default: 1})
+  status: number;
 
   @CreateDateColumn({comment: '创建时间', select: false})
   createdTime: Date;

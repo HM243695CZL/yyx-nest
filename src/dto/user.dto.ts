@@ -30,6 +30,5 @@ export class UserDto {
   mobile: string;
 
   @ApiProperty()
-  @IsNumber()
   status: number;
 }

@@ -91,12 +91,19 @@ export class UserService {
         message: ResponseMessageEnum.ID_IS_NULL,
       }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    const data = await this.userRepository.findOne(id);
+    const data = await this.userRepository
+      .createQueryBuilder('user')
+      .select('user.id', 'id')
+      .addSelect('user.username')
+      .addSelect('user.password')
+      .addSelect('user.email')
+      .addSelect('user.mobile')
+      .getOne();
     if (data) {
       return success(data, ResponseMessageEnum.OPERATE_SUCCESS);
     } else {
       return fail('', ResponseMessageEnum.ID_IS_ERROR)
-    }
+  }
   }
 
   async delete(id) {
@@ -113,6 +120,25 @@ export class UserService {
       throw new HttpException({
         code: HttpStatus.INTERNAL_SERVER_ERROR,
         message: ResponseMessageEnum.DELETE_FAIL
+      }, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  async changeStatus(id) {
+    if (!id) {
+      throw new HttpException({
+        code: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: ResponseMessageEnum.ID_IS_NULL,
+      }, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    const data = await this.userRepository.findOne(id);
+    const result = await this.userRepository.update(id, {status: data.status ? 0 : 1});
+    if(result.affected) {
+      return success({}, ResponseMessageEnum.OPERATE_SUCCESS);
+    } else {
+      throw new HttpException({
+        code: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: ResponseMessageEnum.OPERATE_FAIL,
       }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }

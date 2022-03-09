@@ -49,4 +49,11 @@ export class UserController {
   async delete(@Query() id: CommonDto): Promise<any> {
     return await this.userService.delete(id);
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('changeStatus')
+  @ApiOperation({summary: '改变用户状态'})
+  async changeStatus(@Body() {id}: CommonDto): Promise<any> {
+    return await this.userService.changeStatus(id)
+  }
 }
