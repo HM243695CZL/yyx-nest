@@ -9,7 +9,7 @@ export class IconEntity {
   @PrimaryGeneratedColumn('uuid')
   id: number;
 
-  @Column({comment: '图标名称'})
+  @Column({comment: '图标名称', unique: true})
   iconName: string;
 
   @Column({comment: '创建图标的用户名称'})

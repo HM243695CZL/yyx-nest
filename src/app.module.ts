@@ -11,6 +11,7 @@ import { CommonModule } from './modules/common/common.module';
 import { MenuModule } from './modules/menu/menu.module';
 import { FormGeneratorModule } from './modules/form-generator/form-generator.module';
 import { IconModule } from './modules/icon/icon.module';
+import { CategoryModule } from './modules/category/category.module';
 
 @Module({
   imports: [
@@ -25,7 +26,8 @@ import { IconModule } from './modules/icon/icon.module';
     CommonModule,
     MenuModule,
     FormGeneratorModule,
-    IconModule
+    IconModule,
+    CategoryModule
   ],
   controllers: [AppController],
   providers: [AppService],

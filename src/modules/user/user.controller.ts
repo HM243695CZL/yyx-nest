@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Param, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { UserDto } from '../../dto/user.dto';
