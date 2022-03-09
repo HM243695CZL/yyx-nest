@@ -30,7 +30,7 @@ export class MenuEntity {
   @Column({comment: '上级菜单', nullable: true})
   parentId: string;
 
-  @Column({comment: '是否隐藏： 1 是 0 否'})
+  @Column({comment: '是否隐藏： 1 是 0 否', default: 0, nullable: true})
   hidden: number;
 
   @CreateDateColumn({comment: '创建时间', select: false})

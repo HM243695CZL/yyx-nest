@@ -43,7 +43,5 @@ export class MenuDto {
   parentId: string;
 
   @ApiProperty()
-  @IsNumber()
-  @IsNotEmpty()
   hidden: number;
 }
