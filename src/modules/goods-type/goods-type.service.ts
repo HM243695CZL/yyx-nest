@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { GoodsTypeEntity } from '../../entity/goodsType.entity';
-import { success } from '../../common/res-status';
+import { fail, success } from '../../common/res-status';
 import { ResponseMessageEnum } from '../../enum/response.message.enum';
 import { PageEntity } from '../../entity/page.entity';
 import { createQueryCondition } from '../../common/page-query';
@@ -81,6 +81,39 @@ export class GoodsTypeService {
       throw new HttpException({
         code: HttpStatus.INTERNAL_SERVER_ERROR,
         message: ResponseMessageEnum.UPDATE_FAIL,
+      }, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  async view(id) {
+    if (!id) {
+      throw new HttpException({
+        code: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: ResponseMessageEnum.ID_IS_NULL,
+      }, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    const data = await this.goodsTypeRepository.findOne(id);
+    if (data) {
+      return success(data, ResponseMessageEnum.OPERATE_SUCCESS);
+    } else {
+      return fail('', ResponseMessageEnum.ID_IS_ERROR)
+    }
+  }
+
+  async delete(id) {
+    if (!id) {
+      throw new HttpException({
+        code: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: ResponseMessageEnum.ID_IS_NULL,
+      }, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    const data = await this.goodsTypeRepository.delete(id);
+    if (data.affected) {
+      return success(id, ResponseMessageEnum.DELETE_SUCCESS);
+    } else {
+      throw new HttpException({
+        code: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: ResponseMessageEnum.DELETE_FAIL
       }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
