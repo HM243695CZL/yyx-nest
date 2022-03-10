@@ -13,6 +13,7 @@ import { FormGeneratorModule } from './modules/form-generator/form-generator.mod
 import { IconModule } from './modules/icon/icon.module';
 import { CategoryModule } from './modules/category/category.module';
 import { GoodsTypeModule } from './modules/goods-type/goods-type.module';
+import { GoodsArgsModule } from './modules/goods-args/goods-args.module';
 
 @Module({
   imports: [
@@ -29,7 +30,8 @@ import { GoodsTypeModule } from './modules/goods-type/goods-type.module';
     FormGeneratorModule,
     IconModule,
     CategoryModule,
-    GoodsTypeModule
+    GoodsTypeModule,
+    GoodsArgsModule
   ],
   controllers: [AppController],
   providers: [AppService],
