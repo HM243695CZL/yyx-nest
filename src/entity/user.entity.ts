@@ -5,9 +5,10 @@ import {
   JoinColumn,
   PrimaryGeneratedColumn,
   CreateDateColumn,
-  UpdateDateColumn,
+  UpdateDateColumn, ManyToMany, JoinTable,
 } from 'typeorm';
 import { UploadEntity } from './upload.entity';
+import { RoleEntity as Role } from './role.entity';
 
 @Entity({name: 'user'})
 export class UserEntity {
@@ -30,6 +31,14 @@ export class UserEntity {
   @OneToOne(() => UploadEntity)
   @JoinColumn()
   userImg: UploadEntity;
+
+  @ManyToMany(type => Role, role => role)
+  @JoinTable({
+    name: 'user-role',
+    joinColumn: {name: 'userId'},
+    inverseJoinColumn: { name: 'roleId'}
+  })
+  roles: Role[];
 
   @Column({comment: '状态 0：禁用 1：启用', default: 1})
   status: number;

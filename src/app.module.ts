@@ -14,6 +14,7 @@ import { IconModule } from './modules/icon/icon.module';
 import { CategoryModule } from './modules/category/category.module';
 import { GoodsTypeModule } from './modules/goods-type/goods-type.module';
 import { GoodsArgsModule } from './modules/goods-args/goods-args.module';
+import { RoleModule } from './modules/role/role.module';
 
 @Module({
   imports: [
@@ -31,7 +32,8 @@ import { GoodsArgsModule } from './modules/goods-args/goods-args.module';
     IconModule,
     CategoryModule,
     GoodsTypeModule,
-    GoodsArgsModule
+    GoodsArgsModule,
+    RoleModule
   ],
   controllers: [AppController],
   providers: [AppService],
