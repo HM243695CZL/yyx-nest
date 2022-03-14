@@ -30,7 +30,7 @@ export class UserService {
   async findByUsername(username: string) {
     return await this.userRepository
       .createQueryBuilder('user')
-      .select('user.id')
+      .where('user.username = :username', {username})
       .addSelect('user.id')
       .addSelect('user.username')
       .addSelect('user.password')
@@ -101,7 +101,8 @@ export class UserService {
     }
     const data = await this.userRepository
       .createQueryBuilder('user')
-      .select('user.id', 'id')
+      .where('user.id = :id', {id})
+      .addSelect('user.id')
       .addSelect('user.username')
       .addSelect('user.password')
       .addSelect('user.email')

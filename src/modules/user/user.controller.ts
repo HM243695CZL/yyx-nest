@@ -39,7 +39,7 @@ export class UserController {
 
   @Get('view')
   @ApiOperation({ summary: '查看用户'})
-  async view(@Query() id: CommonDto ): Promise<any> {
+  async view(@Query() {id}: CommonDto ): Promise<any> {
     return await this.userService.view(id);
   }
 
