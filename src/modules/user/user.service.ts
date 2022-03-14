@@ -28,7 +28,15 @@ export class UserService {
    * @param username 用户名
    */
   async findByUsername(username: string) {
-    return await this.userRepository.findOne({username})
+    return await this.userRepository
+      .createQueryBuilder('user')
+      .where('user.username = :username', {username})
+      .addSelect('user.id')
+      .addSelect('user.username')
+      .addSelect('user.password')
+      .addSelect('user.email')
+      .addSelect('user.mobile')
+      .getOne();
   }
 
   async page(page: PageEntity) {
@@ -91,7 +99,15 @@ export class UserService {
         message: ResponseMessageEnum.ID_IS_NULL,
       }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    const data = await this.userRepository.findOne(id);
+    const data = await this.userRepository
+      .createQueryBuilder('user')
+      .where('user.id = :id', {id})
+      .addSelect('user.id')
+      .addSelect('user.username')
+      .addSelect('user.password')
+      .addSelect('user.email')
+      .addSelect('user.mobile')
+      .getOne();
     if (data) {
       return success(data, ResponseMessageEnum.OPERATE_SUCCESS);
     } else {
