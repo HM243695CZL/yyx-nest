@@ -4,32 +4,18 @@ import { Repository } from 'typeorm';
 import { IconEntity } from '../../entity/icon.entity';
 import { success } from '../../common/res-status';
 import { ResponseMessageEnum } from '../../enum/response.message.enum';
-import { PageEntity } from '../../entity/page.entity';
-import { createQueryCondition } from '../../common/page-query';
 import { validate } from 'class-validator';
 import { IconDto } from '../../dto/icon.dto';
 import { RequestParamErrorEnum } from '../../enum/request-param-error.enum';
+import { RepositoryService } from '../../common/repository.service';
 
 @Injectable()
-export class IconService {
+export class IconService extends RepositoryService<IconEntity>{
   constructor(
     @InjectRepository(IconEntity)
     private iconRepository: Repository<IconEntity>
-  ){}
-
-  async list() {
-    const data = await this.iconRepository.find();
-    return success(data, ResponseMessageEnum.OPERATE_SUCCESS);
-  }
-
-
-  async page(page: PageEntity) {
-    const condition = createQueryCondition(page);
-    const data = await this.iconRepository.findAndCount(condition);
-    return success({
-      data: data[0],
-      totalRecords: data[1]
-    }, ResponseMessageEnum.OPERATE_SUCCESS);
+  ){
+    super(iconRepository);
   }
 
   async create(icon, user) {
@@ -54,24 +40,6 @@ export class IconService {
       throw new HttpException({
         status: HttpStatus.INTERNAL_SERVER_ERROR,
         message: ResponseMessageEnum.CREATE_FAIL,
-      }, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-  }
-
-  async delete(id) {
-    if (!id) {
-      throw new HttpException({
-        code: HttpStatus.INTERNAL_SERVER_ERROR,
-        message: ResponseMessageEnum.ID_IS_NULL,
-      }, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-    const data = await this.iconRepository.delete(id);
-    if (data.affected) {
-      return success(id, ResponseMessageEnum.DELETE_SUCCESS);
-    } else {
-      throw new HttpException({
-        code: HttpStatus.INTERNAL_SERVER_ERROR,
-        message: ResponseMessageEnum.DELETE_FAIL
       }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
