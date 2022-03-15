@@ -1,28 +1,17 @@
-import { Body, Controller, Get, Post, UseGuards, Request, Query } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards, Request } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { GoodsTypeService } from './goods-type.service';
-import { PageEntity } from '../../entity/page.entity';
 import { GoodsTypeDto } from '../../dto/goodsType.dto';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
-import { CommonDto } from '../../dto/common.dto';
+import { BaseController } from '../../common/base.controller';
 
 @ApiTags('商品类型管理')
 @Controller('goods-type')
-export class GoodsTypeController {
+export class GoodsTypeController extends BaseController{
   constructor(
     private readonly goodsTypeService: GoodsTypeService
-  ){}
-
-  @Get('list')
-  @ApiOperation({summary: '获取所有商品类型'})
-  async list() {
-    return await this.goodsTypeService.list();
-  }
-
-  @Post('page')
-  @ApiOperation({summary: '分页'})
-  async page(@Body() page: PageEntity): Promise<any> {
-    return await this.goodsTypeService.page(page);
+  ){
+    super(goodsTypeService);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -37,18 +26,5 @@ export class GoodsTypeController {
   @ApiOperation({summary: '更新商品类型'})
   async update(@Body() goodsType: GoodsTypeDto, @Request() req): Promise<any> {
     return await this.goodsTypeService.update(goodsType, req.user);
-  }
-
-  @Get('view')
-  @ApiOperation({summary: '查看商品类型'})
-  async view(@Query() id: CommonDto): Promise<any> {
-    return await this.goodsTypeService.view(id);
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Get('delete')
-  @ApiOperation({summary: '删除商品类型'})
-  async delete(@Query() id: CommonDto): Promise<any> {
-    return await this.goodsTypeService.delete(id);
   }
 }
