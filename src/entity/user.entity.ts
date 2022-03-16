@@ -4,14 +4,12 @@ import {
   OneToOne,
   JoinColumn,
   PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn, ManyToMany, JoinTable,
 } from 'typeorm';
 import { UploadEntity } from './upload.entity';
-import { RoleEntity as Role } from './role.entity';
+import { BaseEntity } from './base.entity';
 
 @Entity({name: 'user'})
-export class UserEntity {
+export class UserEntity extends BaseEntity{
 
   @PrimaryGeneratedColumn('uuid')
   id: number;
@@ -19,7 +17,7 @@ export class UserEntity {
   @Column({ length: 20, comment: '用户名', unique: true})
   username: string;
 
-  @Column({comment: '密码', select: false})
+  @Column({comment: '密码'})
   password: string;
 
   @Column({comment: '邮箱', nullable: true})
@@ -32,21 +30,9 @@ export class UserEntity {
   @JoinColumn()
   userImg: UploadEntity;
 
-  @ManyToMany(type => Role, role => role)
-  @JoinTable({
-    name: 'user-role',
-    joinColumn: {name: 'userId'},
-    inverseJoinColumn: { name: 'roleId'}
-  })
-  roles: Role[];
+  @Column({comment: '备注', nullable: true})
+  remark: string;
 
   @Column({comment: '状态 0：禁用 1：启用', default: 1})
   status: number;
-
-  @CreateDateColumn({comment: '创建时间', select: false})
-  createdTime: Date;
-
-  @UpdateDateColumn({comment: '更新时间', select: false})
-  lastModifiedTime: Date;
-
 }

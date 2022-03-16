@@ -8,6 +8,7 @@ export class UserDto {
     this.password = user.password;
     this.email = user.email;
     this.mobile = user.mobile;
+    this.remark = user.remark;
     this.status = user.status;
   }
 
@@ -19,15 +20,20 @@ export class UserDto {
   username: string;
 
   @ApiProperty()
-  @IsNotEmpty()
   password: string;
 
   @ApiProperty()
   email: string;
 
   @ApiProperty()
+  roles: [];
+
+  @ApiProperty()
   @IsNotEmpty()
   mobile: string;
+
+  @ApiProperty()
+  remark: string;
 
   @ApiProperty()
   status: number;

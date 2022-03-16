@@ -28,6 +28,7 @@ export class RoleService extends RepositoryService<RoleEntity>{
     }
     const data = {
       name: role.name,
+      remark: role.remark,
       createUser: user.username,
       createUserId: user.userId,
       createdTime: new Date(),
@@ -54,6 +55,7 @@ export class RoleService extends RepositoryService<RoleEntity>{
     }
     const data = {
       name: role.name,
+      remark: role.remark,
       createUser: user.username,
       createUserId: user.userId,
       lastModifiedTime: new Date()

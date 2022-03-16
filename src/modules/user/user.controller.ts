@@ -5,6 +5,7 @@ import { UserDto } from '../../dto/user.dto';
 import { CommonDto } from '../../dto/common.dto';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { BaseController } from '../../common/base.controller';
+import { Transaction, EntityManager, TransactionManager } from 'typeorm';
 
 @ApiTags('用户管理')
 @Controller('user')
@@ -19,15 +20,17 @@ export class UserController extends BaseController{
   @UseGuards(JwtAuthGuard)
   @Post('create')
   @ApiOperation({summary: '新增用户'})
-  async create(@Body() user: UserDto): Promise<any>{
-    return await this.userService.create(user);
+  @Transaction()
+  async create(@Body() user: UserDto, @TransactionManager() manager: EntityManager): Promise<any>{
+    return await this.userService.create(user, manager);
   }
 
   @UseGuards(JwtAuthGuard)
   @Post('update')
   @ApiOperation({ summary: '更新用户'})
-  async update(@Body() user: UserDto): Promise<any> {
-    return await this.userService.update(user);
+  @Transaction()
+  async update(@Body() user: UserDto, @TransactionManager() manager: EntityManager): Promise<any> {
+    return await this.userService.update(user, manager);
   }
 
 

@@ -5,6 +5,7 @@ export class RoleDto {
   constructor(role: any) {
     this.id = role.id;
     this.name = role.name;
+    this.remark = role.remark;
   }
 
   @ApiProperty()
@@ -13,4 +14,8 @@ export class RoleDto {
   @ApiProperty()
   @IsNotEmpty()
   name: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  remark: string;
 }
