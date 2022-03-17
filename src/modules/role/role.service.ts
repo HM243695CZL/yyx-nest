@@ -5,15 +5,19 @@ import { RoleEntity } from '../../entity/role.entity';
 import { success } from '../../common/res-status';
 import { ResponseMessageEnum } from '../../enum/response.message.enum';
 import { validate } from 'class-validator';
-import { RoleDto } from '../../dto/role.dto';
+import { RoleDto, RoleMenuDto } from '../../dto/role.dto';
 import { RequestParamErrorEnum } from '../../enum/request-param-error.enum';
 import { RepositoryService } from '../../common/repository.service';
+import { RoleMenuEntity } from '../../entity/role-menu.entity';
+import { CommonDto } from '../../dto/common.dto';
 
 @Injectable()
 export class RoleService extends RepositoryService<RoleEntity>{
   constructor(
     @InjectRepository(RoleEntity)
-    private roleRepository: Repository<RoleEntity>
+    private roleRepository: Repository<RoleEntity>,
+    @InjectRepository(RoleMenuEntity)
+    private roleMenuRepository: Repository<RoleMenuEntity>
   ) {
     super(roleRepository);
   }
@@ -71,5 +75,38 @@ export class RoleService extends RepositoryService<RoleEntity>{
         message: ResponseMessageEnum.UPDATE_FAIL,
       }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+  }
+
+  async divideAuth(param) {
+    const arr = [];
+    param.menus.map(item => {
+      arr.push({
+        roleId: param.id,
+        menuId: item
+      })
+    });
+    // 删除原来的权限
+    await this.roleMenuRepository.delete({roleId: param.id});
+    const data = await this.roleMenuRepository.save(arr);
+    if (data.length === param.menus.length) {
+      return success({}, ResponseMessageEnum.OPERATE_SUCCESS);
+    } else {
+      throw new HttpException({
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: ResponseMessageEnum.CREATE_FAIL,
+      }, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  async getDivideAuth({id}: CommonDto) {
+    const data = await this.roleMenuRepository.find({
+      where: {
+        roleId: id
+      }
+    });
+    const result = data.map(item => {
+      return item.menuId;
+    });
+    return success(result, ResponseMessageEnum.OPERATE_SUCCESS);
   }
 }

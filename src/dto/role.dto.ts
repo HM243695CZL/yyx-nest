@@ -19,3 +19,12 @@ export class RoleDto {
   @IsNotEmpty()
   remark: string;
 }
+
+export class RoleMenuDto {
+
+  @ApiProperty()
+  id: number;
+
+  @ApiProperty()
+  menus: []
+}
