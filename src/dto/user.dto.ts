@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsNotEmpty, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString, MinLength } from 'class-validator';
 
 export class UserDto {
   constructor(user: any) {
@@ -37,4 +37,20 @@ export class UserDto {
 
   @ApiProperty()
   status: number;
+}
+
+export class EditPassDto {
+  constructor(param: EditPassDto) {
+    this.id = param.id;
+    this.password = param.password;
+  }
+
+
+  @ApiProperty()
+  id: number;
+
+  @ApiProperty()
+  @IsString()
+  @MinLength(6)
+  password: string;
 }

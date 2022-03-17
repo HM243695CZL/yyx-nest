@@ -1,6 +1,4 @@
-import { customAlphabet } from 'nanoid';
 import * as CryptoJS from 'crypto-js';
-
 /**
  * 字节转换
  * @param byte
@@ -14,19 +12,8 @@ export function byte2Size(byte) {
 }
 
 /**
- * 生成一个随机值
- */
-export function generatorRandomValue(
-  length: number,
-  placeholder = '1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM',
-) {
-  const customNanoid = customAlphabet(placeholder, length);
-  return customNanoid();
-}
-
-/**
  * md5加密
  */
-export function md5(msg) {
-  return CryptoJS.MD5(msg).toString()
+export function generatorMd5(msg) {
+  return CryptoJS.MD5(msg).toString();
 }

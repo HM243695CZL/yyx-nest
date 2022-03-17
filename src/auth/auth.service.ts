@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { UserService } from '../modules/user/user.service';
 import { success } from '../common/res-status';
 import { ResponseMessageEnum } from '../enum/response.message.enum';
+import { generatorMd5 } from '../utils/tools';
 
 @Injectable()
 export class AuthService {
@@ -14,7 +15,7 @@ export class AuthService {
   async validateUser(username: string, password: string): Promise<any> {
     const user = await this.userService.findByUsername(username);
     if (user) {
-      if (user.password === password) {
+      if (user.password === generatorMd5(password)) {
         const { password, ...result} = user;
         return result;
       } else {
