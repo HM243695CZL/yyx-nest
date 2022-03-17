@@ -7,11 +7,12 @@ import { UserEntity } from '../../entity/user.entity';
 import { UserRoleEntity } from '../../entity/user-role.entity';
 import { UserDto } from '../../dto/user.dto';
 import { RequestParamErrorEnum } from '../../enum/request-param-error.enum';
-import { ResponseMessageEnum } from '../../enum/response.message.enum';
+import { INIT_PASS, ResponseMessageEnum } from '../../enum/response.message.enum';
 import { success, fail } from '../../common/res-status';
 import { RepositoryService } from '../../common/repository.service';
 import { PageEntity } from '../../entity/page.entity';
 import { createQueryCondition } from '../../common/page-query';
+import { md5 } from '../../utils/tools';
 
 @Injectable()
 export class UserService extends RepositoryService<UserEntity>{
@@ -106,11 +107,16 @@ export class UserService extends RepositoryService<UserEntity>{
         message: `${error[0].property}${RequestParamErrorEnum[Object.keys(error[0].constraints)[0]]}`,
       }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+    if (!user.roles || user.roles.length === 0) {
+      throw new HttpException({
+        code: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: '角色不能为空'
+      }, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
     delete user.id;
     user.createdTime = new Date();
     user.lastModifiedTime = new Date();
-    // 用户初始密码为123456
-    user.password = '123456';
+    user.password = md5(INIT_PASS);
     const data = await manager.save(UserEntity, user);
     const roleObj = user.roles.map(item => {
       return {
@@ -128,6 +134,12 @@ export class UserService extends RepositoryService<UserEntity>{
       throw new HttpException({
         code: HttpStatus.INTERNAL_SERVER_ERROR,
         message: `${error[0].property}${RequestParamErrorEnum[Object.keys(error[0].constraints)[0]]}`,
+      }, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    if (!user.roles || user.roles.length === 0) {
+      throw new HttpException({
+        code: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: '角色不能为空'
       }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
     user.lastModifiedTime = new Date();

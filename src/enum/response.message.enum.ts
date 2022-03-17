@@ -12,3 +12,5 @@ export enum ResponseMessageEnum {
   ID_IS_NULL = 'id不能为空',
   ID_IS_ERROR = 'id 出错'
 }
+
+export const INIT_PASS = '123456'; // 新用户初始密码
