@@ -1,15 +1,23 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { InjectRepository } from '@nestjs/typeorm';
 import { UserService } from '../modules/user/user.service';
 import { success } from '../common/res-status';
 import { ResponseMessageEnum } from '../enum/response.message.enum';
 import { generatorMd5 } from '../utils/tools';
+import { UserRoleEntity } from '../entity/user-role.entity';
+import { Repository } from 'typeorm';
+import { RoleMenuEntity } from '../entity/role-menu.entity';
 
 @Injectable()
 export class AuthService {
   constructor(
     private userService: UserService,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+    @InjectRepository(UserRoleEntity)
+    private userRoleRepository: Repository<UserRoleEntity>,
+    @InjectRepository(RoleMenuEntity)
+    private roleMenuRepository: Repository<RoleMenuEntity>
   ){}
 
   async validateUser(username: string, password: string): Promise<any> {

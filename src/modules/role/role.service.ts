@@ -5,7 +5,7 @@ import { RoleEntity } from '../../entity/role.entity';
 import { success } from '../../common/res-status';
 import { ResponseMessageEnum } from '../../enum/response.message.enum';
 import { validate } from 'class-validator';
-import { RoleDto, RoleMenuDto } from '../../dto/role.dto';
+import { RoleDto } from '../../dto/role.dto';
 import { RequestParamErrorEnum } from '../../enum/request-param-error.enum';
 import { RepositoryService } from '../../common/repository.service';
 import { RoleMenuEntity } from '../../entity/role-menu.entity';
