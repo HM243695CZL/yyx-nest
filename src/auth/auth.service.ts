@@ -2,18 +2,20 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserService } from '../modules/user/user.service';
-import { success } from '../common/res-status';
+import { success, fail } from '../common/res-status';
 import { ResponseMessageEnum } from '../enum/response.message.enum';
 import { generatorMd5 } from '../utils/tools';
 import { UserRoleEntity } from '../entity/user-role.entity';
 import { Repository } from 'typeorm';
 import { RoleMenuEntity } from '../entity/role-menu.entity';
+import { MenuService } from '../modules/menu/menu.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private userService: UserService,
     private jwtService: JwtService,
+    private menuService: MenuService,
     @InjectRepository(UserRoleEntity)
     private userRoleRepository: Repository<UserRoleEntity>,
     @InjectRepository(RoleMenuEntity)
@@ -48,8 +50,11 @@ export class AuthService {
       mobile: user.mobile,
       email: user.email,
     };
+    const data = await this.menuService.getMenuAuth(user['id']);
     return success({
-      access_token: this.jwtService.sign(payload)
+      menu: data,
+      access_token: this.jwtService.sign(payload),
+      userInfo: payload
     }, ResponseMessageEnum.OPERATE_SUCCESS);
   }
 }

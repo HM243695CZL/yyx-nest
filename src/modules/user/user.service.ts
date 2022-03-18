@@ -116,7 +116,7 @@ export class UserService extends RepositoryService<UserEntity>{
     delete user.id;
     user.createdTime = new Date();
     user.lastModifiedTime = new Date();
-    user.password = INIT_PASS;
+    user.password = generatorMd5(INIT_PASS);
     const data = await manager.save(UserEntity, user);
     const roleObj = user.roles.map(item => {
       return {

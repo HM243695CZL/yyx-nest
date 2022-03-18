@@ -8,10 +8,12 @@ import { ResponseMessageEnum } from '../../enum/response.message.enum';
 import { MenuDto } from '../../dto/menu.dto';
 import { RequestParamErrorEnum } from '../../enum/request-param-error.enum';
 import { RepositoryService } from '../../common/repository.service';
+import { RoleService } from '../role/role.service';
 
 @Injectable()
 export class MenuService extends RepositoryService<MenuEntity>{
   constructor(
+    private roleService: RoleService,
     @InjectRepository(MenuEntity)
     private readonly menuRepository: Repository<MenuEntity>
   ){
@@ -87,5 +89,21 @@ export class MenuService extends RepositoryService<MenuEntity>{
         message: ResponseMessageEnum.DELETE_FAIL
       }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+  }
+
+  /**
+   * 获取用户对应的菜单权限
+   */
+  async getMenuAuth(userId) {
+    const roleIds = await this.roleService.getRoleIdByUser(userId);
+    return await this.menuRepository
+      .createQueryBuilder('menu')
+      .innerJoinAndSelect(
+        'role-menu',
+        'role_menu',
+        'menu.id = role_menu.menuId'
+      )
+      .andWhere('role_menu.roleId IN (:...roldIds)', { roldIds: roleIds})
+      .getMany();
   }
 }

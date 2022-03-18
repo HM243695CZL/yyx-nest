@@ -9,6 +9,7 @@ import { jwtConstants } from '../common/constant';
 import { JwtStrategy } from './jwt.strategy';
 import { UserRoleEntity } from '../entity/user-role.entity';
 import { RoleMenuEntity } from '../entity/role-menu.entity';
+import { MenuModule } from '../modules/menu/menu.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { RoleMenuEntity } from '../entity/role-menu.entity';
         expiresIn: '4h'
       }
     }),
+    MenuModule,
     TypeOrmModule.forFeature([UserRoleEntity, RoleMenuEntity])
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy],

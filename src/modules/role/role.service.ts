@@ -1,6 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { isEmpty, map } from 'lodash';
 import { RoleEntity } from '../../entity/role.entity';
 import { success } from '../../common/res-status';
 import { ResponseMessageEnum } from '../../enum/response.message.enum';
@@ -10,6 +11,7 @@ import { RequestParamErrorEnum } from '../../enum/request-param-error.enum';
 import { RepositoryService } from '../../common/repository.service';
 import { RoleMenuEntity } from '../../entity/role-menu.entity';
 import { CommonDto } from '../../dto/common.dto';
+import { UserRoleEntity } from '../../entity/user-role.entity';
 
 @Injectable()
 export class RoleService extends RepositoryService<RoleEntity>{
@@ -17,7 +19,9 @@ export class RoleService extends RepositoryService<RoleEntity>{
     @InjectRepository(RoleEntity)
     private roleRepository: Repository<RoleEntity>,
     @InjectRepository(RoleMenuEntity)
-    private roleMenuRepository: Repository<RoleMenuEntity>
+    private roleMenuRepository: Repository<RoleMenuEntity>,
+    @InjectRepository(UserRoleEntity)
+    private userRoleRepository: Repository<UserRoleEntity>
   ) {
     super(roleRepository);
   }
@@ -108,5 +112,23 @@ export class RoleService extends RepositoryService<RoleEntity>{
       return item.menuId;
     });
     return success(result, ResponseMessageEnum.OPERATE_SUCCESS);
+  }
+
+  /**
+   * 根据用户id查找角色信息
+   * @param userId 用户id
+   */
+  async getRoleIdByUser(userId){
+    const result = await this.userRoleRepository.find({
+      where: {
+        userId
+      }
+    });
+    if(!isEmpty(result)) {
+      return map(result, item => {
+        return item.roleId
+      })
+    }
+    return [];
   }
 }
