@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { isEmpty, map } from 'lodash';
 import { RoleEntity } from '../../entity/role.entity';
 import { success } from '../../common/res-status';
@@ -130,5 +130,34 @@ export class RoleService extends RepositoryService<RoleEntity>{
       })
     }
     return [];
+  }
+
+  async delete({id}) {
+    const count = await this.countUserIdByRole(id);
+    if (count > 0) {
+      throw new HttpException({
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: '该角色存在关联用户，请先删除关联用户'
+      }, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    const data = await this.roleRepository.delete({id});
+    if (data.affected === 1) {
+      return success(id, ResponseMessageEnum.DELETE_SUCCESS);
+    } else {
+      throw new HttpException({
+        code: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: ResponseMessageEnum.DELETE_FAIL
+      }, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  /**
+   * 根据角色id查询关联用户id
+   * @param roleId
+   */
+  async countUserIdByRole(roleId): Promise<any> {
+    return await this.userRoleRepository.count({
+      roleId: In([roleId])
+    });
   }
 }

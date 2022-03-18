@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, EntityManager } from 'typeorm';
+import { Repository, EntityManager, In } from 'typeorm';
 import { validate } from 'class-validator';
 import { findIndex } from 'lodash';
 import { UserEntity } from '../../entity/user.entity';
@@ -179,6 +179,25 @@ export class UserService extends RepositoryService<UserEntity>{
       return success({...data, roles }, ResponseMessageEnum.OPERATE_SUCCESS);
     } else {
       return fail('', ResponseMessageEnum.ID_IS_ERROR)
+    }
+  }
+
+  async delete({id}) {
+    if (!id) {
+      throw new HttpException({
+        code: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: ResponseMessageEnum.ID_IS_NULL,
+      }, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    const data = await this.userRepository.delete(id);
+    await this.userRoleRepository.delete({userId: In([id])});
+    if (data.affected) {
+      return success(id, ResponseMessageEnum.DELETE_SUCCESS);
+    } else {
+      throw new HttpException({
+        code: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: ResponseMessageEnum.DELETE_FAIL
+      }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
