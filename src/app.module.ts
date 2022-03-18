@@ -15,6 +15,7 @@ import { CategoryModule } from './modules/category/category.module';
 import { GoodsTypeModule } from './modules/goods-type/goods-type.module';
 import { GoodsArgsModule } from './modules/goods-args/goods-args.module';
 import { RoleModule } from './modules/role/role.module';
+import { GoodsModule } from './modules/goods/goods.module';
 
 @Module({
   imports: [
@@ -33,7 +34,8 @@ import { RoleModule } from './modules/role/role.module';
     CategoryModule,
     GoodsTypeModule,
     GoodsArgsModule,
-    RoleModule
+    RoleModule,
+    GoodsModule
   ],
   controllers: [AppController],
   providers: [AppService],
