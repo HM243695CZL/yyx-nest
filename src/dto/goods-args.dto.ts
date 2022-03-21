@@ -4,8 +4,8 @@ import { IsNotEmpty } from 'class-validator';
 export class GoodsArgsDto {
   constructor(goodsArgs: any) {
     this.id = goodsArgs.id;
-    this.argsCnName = goodsArgs.argsCnName;
-    this.argsEnName = goodsArgs.argsEnName;
+    this.argsName = goodsArgs.argsName;
+    this.argsValue = goodsArgs.argsValue;
   }
 
 
@@ -14,9 +14,9 @@ export class GoodsArgsDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  argsCnName: string;
+  argsName: string;
 
   @ApiProperty()
   @IsNotEmpty()
-  argsEnName: string;
+  argsValue: string;
 }

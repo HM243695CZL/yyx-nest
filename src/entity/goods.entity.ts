@@ -15,13 +15,13 @@ export class GoodsEntity extends BaseEntity{
   title: string;
 
   @Column({comment: '商品原价'})
-  originPrice: number;
+  originPrice: string;
 
   @Column({comment: '商品售价上限'})
-  sellPriceStart: number;
+  sellPriceStart: string;
 
   @Column({comment: '商品售价下限'})
-  sellPriceEnd: number;
+  sellPriceEnd: string;
 
   @Column({comment: '商品分类id'})
   categoryId: string;
@@ -29,7 +29,7 @@ export class GoodsEntity extends BaseEntity{
   @Column({comment: '商品库存'})
   stock: number;
 
-  @Column({comment: '已售数量'})
+  @Column({comment: '已售数量', default: 0})
   sellCount: number;
 
   @Column({comment: '发货时间'})
@@ -38,7 +38,7 @@ export class GoodsEntity extends BaseEntity{
   @Column({comment: '封面图id'})
   coverImgId: string;
 
-  @Column({comment: '是否包邮 1： 是 0：否 '})
+  @Column({comment: '是否包邮 1： 是 0：否 ', default: 1})
   freeShopping: number;
 
   @Column({comment: '关于商品'})
@@ -53,6 +53,6 @@ export class GoodsEntity extends BaseEntity{
   @Column({comment: '上架时间', nullable: true})
   publishTime: Date;
 
-  @Column({comment: '状态 1： 上架 0：下架'})
+  @Column({comment: '状态 1： 上架 0：下架', default: 0})
   status: number;
 }

@@ -10,14 +10,12 @@ export class GoodsDto {
     this.sellPriceEnd = goods.sellPriceEnd;
     this.categoryId = goods.categoryId;
     this.stock = goods.stock;
-    this.sellCount = goods.sellCount;
     this.deliveryTime = goods.deliveryTime;
     this.coverImgId = goods.coverImgId;
     this.freeShopping = goods.freeShopping;
     this.aboutGoods = goods.aboutGoods;
     this.aboutDelivery = goods.aboutDelivery;
     this.aboutReturn = goods.aboutReturn;
-    this.status = goods.status;
   }
 
   @ApiProperty()
@@ -30,18 +28,15 @@ export class GoodsDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsNumber()
-  originPrice: number;
+  originPrice: string;
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsNumber()
-  sellPriceStart: number;
+  sellPriceStart: string;
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsNumber()
-  sellPriceEnd: number;
+  sellPriceEnd: string;
 
   @ApiProperty()
   @IsNotEmpty()
@@ -52,11 +47,6 @@ export class GoodsDto {
   @IsNotEmpty()
   @IsNumber()
   stock: number;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsNumber()
-  sellCount: number;
 
   @ApiProperty()
   @IsNotEmpty()
@@ -74,6 +64,12 @@ export class GoodsDto {
   freeShopping: number;
 
   @ApiProperty()
+  carousels: [];
+
+  @ApiProperty()
+  argsIds: [];
+
+  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   aboutGoods: string;
@@ -87,11 +83,6 @@ export class GoodsDto {
   @IsNotEmpty()
   @IsString()
   aboutReturn: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsNumber()
-  status: number;
 }
 
 export class GoodsGoodsArgsDto {

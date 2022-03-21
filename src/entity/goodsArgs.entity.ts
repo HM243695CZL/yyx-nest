@@ -8,11 +8,11 @@ export class GoodsArgsEntity {
   @PrimaryGeneratedColumn('uuid')
   id: number;
 
-  @Column({comment: '参数中文名', unique: true})
-  argsCnName: string;
+  @Column({comment: '参数名称', unique: true})
+  argsName: string;
 
-  @Column({comment: '参数英文名', unique: true})
-  argsEnName: string;
+  @Column({comment: '参数值', unique: true})
+  argsValue: string;
 
   @Column({comment: '创建参数的用户名称'})
   createUser: string;

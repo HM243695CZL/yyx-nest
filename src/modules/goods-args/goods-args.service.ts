@@ -27,8 +27,8 @@ export class GoodsArgsService extends RepositoryService<GoodsArgsEntity>{
       }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
     const data = {
-      argsCnName: goodsArgs.argsCnName,
-      argsEnName: goodsArgs.argsEnName,
+      argsName: goodsArgs.argsName,
+      argsValue: goodsArgs.argsValue,
       createUser: user.username,
       createUserId: user.userId,
       createdTime: new Date(),
@@ -54,8 +54,8 @@ export class GoodsArgsService extends RepositoryService<GoodsArgsEntity>{
       }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
     const data = {
-      argsCnName: goodsArgs.argsCnName,
-      argsEnName: goodsArgs.argsEnName,
+      argsName: goodsArgs.argsName,
+      argsValue: goodsArgs.argsValue,
       createUser: user.username,
       createUserId: user.userId,
       lastModifiedTime: new Date()
