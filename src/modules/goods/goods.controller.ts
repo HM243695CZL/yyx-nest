@@ -22,4 +22,12 @@ export class GoodsController extends BaseController{
   async create(@Body() goods: GoodsDto, @TransactionManager() manager: EntityManager): Promise<any> {
     return await this.goodsService.create(goods, manager);
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('update')
+  @ApiOperation({summary: '更新商品'})
+  @Transaction()
+  async update(@Body() goods: GoodsDto, @TransactionManager() manager: EntityManager): Promise<any> {
+    return await this.goodsService.update(goods, manager);
+  }
 }

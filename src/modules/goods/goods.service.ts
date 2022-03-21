@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { EntityManager, Repository } from 'typeorm';
 import { validate } from 'class-validator';
+import { cloneDeep } from 'lodash'
 import { RepositoryService } from '../../common/repository.service';
 import { GoodsEntity } from '../../entity/goods.entity';
 import { GoodsDto } from '../../dto/goods.dto';
@@ -113,6 +114,52 @@ export class GoodsService extends RepositoryService<GoodsEntity>{
     });
     await manager.save(GoodsGoodsArgsEntity, argsArr);
     return success(data.id, ResponseMessageEnum.CREATE_SUCCESS);
+  }
+
+  async update(goods, manager: EntityManager) {
+    const error = await validate(new GoodsDto(goods));
+    if (error.length) {
+      throw new HttpException({
+        code: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: `${error[0].property}${RequestParamErrorEnum[Object.keys(error[0].constraints)[0]]}`,
+      }, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    if (goods.carousels.length === 0) {
+      throw new HttpException({
+        code: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: '商品轮播图不能为空'
+      }, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    goods.lastModifiedTime = new Date();
+    const getParams = cloneDeep(goods);
+    delete goods.carousels;
+    delete goods.argsIds;
+    await manager.update(GoodsEntity, goods.id, {
+      ...goods
+    });
+    // 删除之前的商品轮播图
+    const carouselArr = getParams.carousels.map(item => {
+      return {
+        goodsId: goods.id,
+        carouselId: item
+      }
+    });
+    await manager.delete(GoodsCarouselEntity, {goodsId: goods.id});
+    // 重新添加商品轮播图
+    await manager.save(GoodsCarouselEntity, carouselArr);
+    // 删除之前的商品参数
+    const argsIdArr = getParams.argsIds.map(item => {
+      return {
+        goodsId: goods.id,
+        goodsArgsId: item
+      }
+    });
+    await manager.delete(GoodsGoodsArgsEntity, {goodsId: goods.id});
+    // 重新添加商品参数
+    await manager.save(GoodsGoodsArgsEntity, argsIdArr);
+    return success({
+      id: goods.id
+    }, ResponseMessageEnum.UPDATE_SUCCESS);
   }
 
   async view({id}) {
