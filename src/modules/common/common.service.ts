@@ -22,7 +22,7 @@ export class CommonService {
     data.lastModifiedTime = new Date();
     const {id} = await this.uploadRepository.save(data);
     if (id) {
-      return success(id, ResponseMessageEnum.UPLOAD_SUCCESS);
+      return success(await this.getFileInfoById(id), ResponseMessageEnum.UPLOAD_SUCCESS);
     } else {
       throw new HttpException({
         status: HttpStatus.INTERNAL_SERVER_ERROR,
@@ -50,12 +50,46 @@ export class CommonService {
       files.map(item => {
         resArrId.push(item.id);
       });
-      return success(resArrId, ResponseMessageEnum.UPLOAD_SUCCESS);
+      return success(await this.getFileInfoByIdArr(resArrId), ResponseMessageEnum.UPLOAD_SUCCESS);
     } else {
       throw new HttpException({
         status: HttpStatus.INTERNAL_SERVER_ERROR,
         message: ResponseMessageEnum.UPLOAD_FAIL
       }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+  }
+
+  /**
+   * 根据id获取上传的文件信息
+   * @param id
+   */
+  async getFileInfoById(id) {
+    const data = await this.uploadRepository.findOne({id});
+    const { size, originFileName, newFileName} = data;
+    return {
+      size,
+      originFileName,
+      newFileName,
+      id
+    }
+  }
+
+  /**
+   * 根据数组id获取上传的文件信息
+   * @param arrId
+   */
+  async getFileInfoByIdArr(arrId) {
+    const data = await this.uploadRepository.find(arrId);
+    const arr = [];
+    data.map(item => {
+      const { size, originFileName, newFileName, id } = item;
+      arr.push({
+        size,
+        originFileName,
+        newFileName,
+        id
+      });
+    });
+    return arr;
   }
 }

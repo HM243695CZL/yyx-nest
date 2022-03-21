@@ -1,5 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { NestExpressApplication, ExpressAdapter } from '@nestjs/platform-express';
+import { join } from 'path';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './common/http-exception.filter';
 import { TransformInterceptor } from './interceptor/transform.interceptor';
@@ -7,7 +9,14 @@ import { logger } from './middleware/logger.middleware';
 import * as express from 'express';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const server = express();
+  const app = await NestFactory.create<NestExpressApplication>(
+    AppModule,
+    new ExpressAdapter(server),
+  );
+  app.useStaticAssets(join(__dirname, '..', 'public/upload/'), {
+    prefix: '/public/upload/' // 设置虚拟路径
+  });
 
   app.use(express.json());
   app.use(express.urlencoded({

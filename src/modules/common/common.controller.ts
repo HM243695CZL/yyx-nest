@@ -32,7 +32,7 @@ export class CommonController {
   async uploadOne(@UploadedFile() file, @Body() body) {
     // body 为FormData中的其他非文件参数
     const newFileName = nanoid() + '.' + file.originalname.split('.')[1];
-    const fileStream = createWriteStream(join(__dirname, '../../../public', `${newFileName}`));
+    const fileStream = createWriteStream(join(__dirname, '../../../public/upload', `${newFileName}`));
     fileStream.write(file.buffer);
     const obj = {
       id: uuidv4(),
@@ -62,7 +62,7 @@ export class CommonController {
     let arr = [];
     for (const file of files) {
       const newFileName = nanoid() + '.' + file.originalname.split('.')[1];
-      const fileStream = createWriteStream(join(__dirname, '../../../public', `${newFileName}`));
+      const fileStream = createWriteStream(join(__dirname, '../../../public/upload', `${newFileName}`));
       fileStream.write(file.buffer);
       arr.push({
         id: uuidv4(),
