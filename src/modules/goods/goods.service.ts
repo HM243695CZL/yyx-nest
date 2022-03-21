@@ -12,6 +12,7 @@ import { GoodsCarouselEntity } from '../../entity/goods-carousel.entity';
 import { GoodsGoodsArgsEntity } from '../../entity/goods-goodsArgs.entity';
 import { PageEntity } from '../../entity/page.entity';
 import { createQueryCondition } from '../../common/page-query';
+import { UploadEntity } from '../../entity/upload.entity';
 
 @Injectable()
 export class GoodsService extends RepositoryService<GoodsEntity>{
@@ -21,7 +22,9 @@ export class GoodsService extends RepositoryService<GoodsEntity>{
     @InjectRepository(GoodsCarouselEntity)
     private goodsCarouselRepository: Repository<GoodsCarouselEntity>,
     @InjectRepository(GoodsGoodsArgsEntity)
-    private goodsGoodsArgsRepository: Repository<GoodsGoodsArgsEntity>
+    private goodsGoodsArgsRepository: Repository<GoodsGoodsArgsEntity>,
+    @InjectRepository(UploadEntity)
+    private uploadRepository: Repository<UploadEntity>,
   ){
     super(goodsRepository);
   }
@@ -110,5 +113,40 @@ export class GoodsService extends RepositoryService<GoodsEntity>{
     });
     await manager.save(GoodsGoodsArgsEntity, argsArr);
     return success(data.id, ResponseMessageEnum.CREATE_SUCCESS);
+  }
+
+  async view({id}) {
+    if (!id) {
+      throw new HttpException({
+        code: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: ResponseMessageEnum.ID_IS_NULL,
+      }, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    const data = await this.goodsRepository.findOne({id});
+    const coverImg = await this.uploadRepository.findOne({id: data.coverImgId});
+    const goodsCarouselList = await this.goodsCarouselRepository.find({
+      where: {
+        goodsId: id
+      }
+    });
+    // 获取商品封面图信息
+    const carouselArr = [];
+    goodsCarouselList.map(item => {
+      carouselArr.push(item.carouselId)
+    });
+    const carouselSource = await this.uploadRepository.findByIds(carouselArr);
+    // 获取商品对应的商品参数
+   const result = await this.goodsGoodsArgsRepository.find({
+     where: {
+       goodsId: id
+     }
+   });
+   const argsId = result.map(item => item.goodsArgsId);
+    return success({
+      ...data,
+      source: coverImg,
+      carouselSource,
+      argsId,
+    }, ResponseMessageEnum.OPERATE_SUCCESS);
   }
 }

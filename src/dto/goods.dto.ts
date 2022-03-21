@@ -16,6 +16,7 @@ export class GoodsDto {
     this.aboutGoods = goods.aboutGoods;
     this.aboutDelivery = goods.aboutDelivery;
     this.aboutReturn = goods.aboutReturn;
+    this.attentionNote = goods.attentionNote;
   }
 
   @ApiProperty()
@@ -83,6 +84,11 @@ export class GoodsDto {
   @IsNotEmpty()
   @IsString()
   aboutReturn: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  attentionNote: string;
 }
 
 export class GoodsGoodsArgsDto {

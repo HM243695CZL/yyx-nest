@@ -50,6 +50,9 @@ export class GoodsEntity extends BaseEntity{
   @Column({comment: '关于退货'})
   aboutReturn: string;
 
+  @Column({comment: '注意事项'})
+  attentionNote: string;
+
   @Column({comment: '上架时间', nullable: true})
   publishTime: Date;
 
