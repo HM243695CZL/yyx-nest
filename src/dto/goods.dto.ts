@@ -29,7 +29,7 @@ export class GoodsDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  originPrice: string;
+  originPrice: number;
 
   @ApiProperty()
   @IsNotEmpty()

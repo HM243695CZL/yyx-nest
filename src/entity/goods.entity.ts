@@ -15,7 +15,7 @@ export class GoodsEntity extends BaseEntity{
   title: string;
 
   @Column({comment: '商品原价'})
-  originPrice: string;
+  originPrice: number;
 
   @Column({comment: '商品售价上限'})
   sellPriceStart: string;

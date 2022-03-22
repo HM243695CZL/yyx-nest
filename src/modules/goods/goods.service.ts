@@ -45,6 +45,7 @@ export class GoodsService extends RepositoryService<GoodsEntity>{
         'u.id = goods.coverImgId'
       )
       .where({...condition.where})
+      .orderBy({...condition.order})
       .offset(condition.skip)
       .limit(condition.take)
       .getRawMany();
@@ -62,7 +63,7 @@ export class GoodsService extends RepositoryService<GoodsEntity>{
           size: item.u_size,
           newFileName: item.u_newFileName
         },
-        sellPrice: item.goods_sellPriceStart + ' - ' + item.goods_sellPriceEnd + '￥',
+        originPrice:  item.goods_originPrice,
         sellCount: item.goods_sellCount,
         stock: item.goods_stock,
         publishTime: item.goods_publishTime,
