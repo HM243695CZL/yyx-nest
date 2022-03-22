@@ -64,6 +64,7 @@ export class GoodsService extends RepositoryService<GoodsEntity>{
           newFileName: item.u_newFileName
         },
         originPrice:  item.goods_originPrice,
+        sellPriceStart: item.goods_sellPriceStart,
         sellCount: item.goods_sellCount,
         stock: item.goods_stock,
         publishTime: item.goods_publishTime,
