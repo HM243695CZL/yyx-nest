@@ -196,4 +196,26 @@ export class GoodsService extends RepositoryService<GoodsEntity>{
       argsId,
     }, ResponseMessageEnum.OPERATE_SUCCESS);
   }
+
+  async changeStatus(id) {
+    if (!id) {
+      throw new HttpException({
+        code: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: ResponseMessageEnum.ID_IS_NULL,
+      }, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    const data = await this.goodsRepository.findOne(id);
+    const result = await this.goodsRepository.update(id, {
+      status: data.status ? 0 : 1,
+      publishTime: new Date()
+    });
+    if(result.affected === 1) {
+      return success({}, ResponseMessageEnum.OPERATE_SUCCESS);
+    } else {
+      throw new HttpException({
+        code: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: ResponseMessageEnum.OPERATE_FAIL,
+      }, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
 }

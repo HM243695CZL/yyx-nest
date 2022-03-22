@@ -8,7 +8,7 @@ export class GoodsArgsEntity {
   @PrimaryGeneratedColumn('uuid')
   id: number;
 
-  @Column({comment: '参数名称', unique: true})
+  @Column({comment: '参数名称'})
   argsName: string;
 
   @Column({comment: '参数值', unique: true})

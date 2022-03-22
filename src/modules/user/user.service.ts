@@ -210,7 +210,7 @@ export class UserService extends RepositoryService<UserEntity>{
     }
     const data = await this.userRepository.findOne(id);
     const result = await this.userRepository.update(id, {status: data.status ? 0 : 1});
-    if(result.affected) {
+    if(result.affected === 1) {
       return success({}, ResponseMessageEnum.OPERATE_SUCCESS);
     } else {
       throw new HttpException({
