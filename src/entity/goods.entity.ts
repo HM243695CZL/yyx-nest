@@ -17,10 +17,10 @@ export class GoodsEntity extends BaseEntity{
   @Column({comment: '商品原价'})
   originPrice: number;
 
-  @Column({comment: '商品售价上限'})
+  @Column({comment: '商品售价下限'})
   sellPriceStart: string;
 
-  @Column({comment: '商品售价下限'})
+  @Column({comment: '商品售价上限', nullable: true})
   sellPriceEnd: string;
 
   @Column({comment: '商品分类id'})

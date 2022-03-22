@@ -36,7 +36,6 @@ export class GoodsDto {
   sellPriceStart: string;
 
   @ApiProperty()
-  @IsNotEmpty()
   sellPriceEnd: string;
 
   @ApiProperty()
