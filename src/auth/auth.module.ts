@@ -17,7 +17,7 @@ import { MenuModule } from '../modules/menu/menu.module';
     JwtModule.register({
       secret: jwtConstants.secret,
       signOptions: {
-        expiresIn: '4h'
+        expiresIn: '12h'
       }
     }),
     MenuModule,
